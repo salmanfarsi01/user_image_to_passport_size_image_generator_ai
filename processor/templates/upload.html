@@ -1,0 +1,38 @@
+<!-- templates/upload.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passport Photo Maker</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="container">
+        <h1>Passport Photo Maker</h1>
+        <p>Upload a straight-facing photo and select your country's standard.</p>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="country">Select Standard:</label>
+            <select name="country" id="country" class="styled-select">
+                <option value="bd">Bangladesh (45mm x 55mm)</option>
+                <option value="us">USA (2in x 2in)</option>
+            </select>
+            
+            <div class="file-input-wrapper">
+                <input type="file" name="image" required>
+            </div>
+            
+            <input type="hidden" name="action" value="upload">
+            <button type="submit" class="styled-button">Create My Photo</button>
+        </form>
+    </div>
+
+    <script src="{% static 'js/animation.js' %}"></script>
+</body>
+</html>

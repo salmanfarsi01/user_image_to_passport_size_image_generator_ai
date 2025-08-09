@@ -1,0 +1,41 @@
+<!-- templates/result.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalize Your Photo</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="container">
+        <h1>Step 2: Finalize Your Photo</h1>
+        <p>Your photo is ready! Preview with different backgrounds and download.</p>
+
+        <div class="preview-container" style="background-color: {{ color_hex }};">
+            <img src="data:image/png;base64,{{ image_data_base64 }}" alt="Your processed image" class="result-image">
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="image_data" value="{{ image_data_base64 }}">
+            <input type="hidden" name="country" value="{{ country_name }}">
+            
+            <label for="color">Choose Background:</label>
+            <select name="color" id="color" class="styled-select">
+                <option value="white" {% if color_name == 'white' %}selected{% endif %}>White</option>
+                <option value="off-white" {% if color_name == 'off-white' %}selected{% endif %}>Off-White</option>
+                <option value="light-blue" {% if color_name == 'light-blue' %}selected{% endif %}>Light Blue</option>
+            </select>
+            <br><br>
+            <button type="submit" name="action" value="preview" class="styled-button">Preview Color</button>
+            <button type="submit" name="action" value="download" class="styled-button">Download Final Photo</button>
+        </form>
+    </div>
+
+    <script src="{% static 'js/animation.js' %}"></script>
+</body>
+</html>
